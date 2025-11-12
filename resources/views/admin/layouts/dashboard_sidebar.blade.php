@@ -43,10 +43,18 @@
               <p>User Profile</p>
             </a>
           </li> -->
+          @if(auth('admin')->user()->can('admin_read'))
+          <li class="{{ request()->is('admin/admin') ? 'active' : '' }}">
+            <a  href="{{ route('admin.admin.index') }}">
+              <i class="now-ui-icons design_bullet-list-67"></i>
+              <p>Admins</p>
+            </a>
+          </li>
+          @endif
           <li class="{{ request()->is('admin/result') ? 'active' : '' }}">
             <a  href="{{ route('admin.result.index') }}">
               <i class="now-ui-icons design_bullet-list-67"></i>
-              <p>Table List</p>
+              <p>Games</p>
             </a>
           </li>
           <li class="{{ request()->is('admin/wallet') ? 'active' : '' }}">

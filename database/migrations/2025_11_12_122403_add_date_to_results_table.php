@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('games', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('results', function (Blueprint $table) {
+            Schema::table('results', function (Blueprint $table) {
+                $table->date('date')->nullable()->after('number');
+            });
         });
     }
 
@@ -26,6 +27,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('games');
+        Schema::table('results', function (Blueprint $table) {
+           $table->dropColumn('date');
+        });
     }
 };

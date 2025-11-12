@@ -65,6 +65,7 @@ Route::namespace('\App\Http\Controllers\Admin')->prefix('admin')->name('admin.')
     Route::middleware('admin')->group(function(){
           Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
           Route::resource('result','ResultsController')->names('result');
+          Route::resource('admin','AdminController')->names('admin');
           Route::resource('wallet','WalletController')->names('wallet');
           Route::resource('rate','RateController')->names('rate');
           Route::resource('blog','BlogController')->names('blog');
@@ -72,5 +73,8 @@ Route::namespace('\App\Http\Controllers\Admin')->prefix('admin')->name('admin.')
           Route::post('/get-random-username', 'UserController@getRandomUsername')->name('getRandomUsername');
           Route::resource('payment_request','PaymentRequest')->names('payment_request');
     });
+
+
+
     Route::post('logout', 'Auth\AuthenticatedSessionController@destroy')->name('logout');
 });
