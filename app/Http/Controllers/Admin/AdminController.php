@@ -67,7 +67,7 @@ class AdminController extends Controller
 
         $admin->assignRole($request->role);
 
-        return redirect()->route('admin.admin.list')->with('success', 'Admin created successfully!');
+        return redirect()->route('admin.index')->with('success', 'Admin created successfully!');
     }
 
     public function show($id)

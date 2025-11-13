@@ -85,7 +85,7 @@ class ResultsController extends Controller
                  $status =  Betting::where('id', $wls->id)->first();
                  if($status->type == 'jodi'){
                      if($wls->number == $request->result){
-                        $status->status = 'win';
+                        $status->status = 'won';
                         $wallet_update =  new Wallet;
                         $wallet_update->user_id = $wls->user_id;
                         $wallet_update->type = 'cr';
@@ -94,13 +94,13 @@ class ResultsController extends Controller
                         $wallet_update->save();
                     }else{
                         $lose = $wls->amount;
-                        $this->commision_allocate($wls->user_id, $lose, $wls->id);
-                        $status->status = 'lose'; 
+                        // $this->commision_allocate($wls->user_id, $lose, $wls->id);
+                        $status->status = 'lost'; 
                     }
                  }else{
                     $last_digit =  substr($request->result, -1); 
                     if($wls->number == $last_digit){
-                        $status->status = 'win';
+                        $status->status = 'won';
                         $wallet_update =  new Wallet;
                         $wallet_update->user_id = $wls->user_id;
                         $wallet_update->type = 'cr';
@@ -109,15 +109,15 @@ class ResultsController extends Controller
                         $wallet_update->save();
                     }else{
                         $lose = $wls->amount;
-                        $this->commision_allocate($wls->user_id, $lose , $wls->id);
-                        $status->status = 'lose';
+                        // $this->commision_allocate($wls->user_id, $lose , $wls->id);
+                        $status->status = 'lost';
                     }
                  }
                 $status->save();
             }
             // return $win_lose_status;
         }
-        // die();
+
         $game = Game::where('id',$request->id)->first();
         $store = new Result;
         $store->game_id = $request->id;

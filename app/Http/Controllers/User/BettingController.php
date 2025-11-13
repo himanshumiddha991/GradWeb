@@ -34,6 +34,7 @@ class BettingController extends Controller
                     array_push($array, [$key, $value]);
                 }
             }
+
             $total =  array_sum(array_map(function($item) { 
                 return $item[1]; 
             }, $array));

@@ -42,10 +42,9 @@
                         <label for="email">Email</label>
                         <input type="email" class="form-control" value="" name="email" id="email" >
                     </div>
-                    <button type="button" class="btn btn-primary" onclick="getRandomUsername()">Generate</button>
                     <div class="form-group mx-2">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" class="form-control" value="" name="username" id="username" >
+                        <label for="mobile">Mobile</label>
+                        <input type="tel" id="mobile" class="form-control" value="" name="mobile" id="mobile" >
                     </div>
                     <div class="form-group mx-2">
                         <label for="password">Password</label>

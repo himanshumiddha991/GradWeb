@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'password_spy',
+        'admin_id',
+        'mobile',
         'referral_code',
     ];
 
