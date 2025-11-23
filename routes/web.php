@@ -65,6 +65,7 @@ Route::namespace('\App\Http\Controllers\Admin')->prefix('admin')->name('admin.')
     Route::middleware('admin')->group(function(){
           Route::get('dashboard', 'HomeController@dashboard')->name('dashboard');
           Route::resource('result','ResultsController')->names('result');
+          Route::resource('games','GamesController')->names('games');
           Route::resource('admin','AdminController')->names('admin');
           Route::resource('wallet','WalletController')->names('wallet');
           Route::resource('rate','RateController')->names('rate');

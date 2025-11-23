@@ -37,7 +37,7 @@
              <a href="/user/wallet">WALLET</a>
              <a href="/user/withdraw">WITHDRAW</a>
              <a href="/user/payment">ADD MONEY</a>
-             <a href="/user/refer-earn">REFER AND EARN</a>
+             <!-- <a href="/user/refer-earn">REFER AND EARN</a> -->
                  <form method="POST" action="{{ route('admin.logout') }}">
                   @csrf
                   <button class="remove_btn_default" type="submit">LOGOUT</button>

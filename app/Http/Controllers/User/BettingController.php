@@ -27,6 +27,11 @@ class BettingController extends Controller
     public function store(Request $request){
        try {
             $inputs = $request->input('inputs');
+            $game = Game::find($request->game_id);
+            $totalBetAmount = Betting::where('user_id', auth()->user()->id)
+            ->where('game_id', $request->game_id)
+            ->where('betting_date', $request->game_date)
+            ->sum('amount');
             $available_fund = auth()->user()->balance(auth()->user()->id);
             $array = [];
             foreach ($inputs as $key => $value) {
@@ -38,6 +43,52 @@ class BettingController extends Controller
             $total =  array_sum(array_map(function($item) { 
                 return $item[1]; 
             }, $array));
+
+            $limit_total =  $total+$totalBetAmount;
+
+            $time_amount = json_decode($game->time_amount, true);
+
+            $currentTime = date("H:i");    // current time
+            $currentTime = "02:50:00";
+
+            $currentTs = strtotime($currentTime);
+            $endTs = strtotime($game->end_time);
+
+            $endTime = $game->end_time;         // from table
+        
+
+            $time_amount = json_decode($game->time_amount, true);
+
+            // convert to timestamps
+            $currentTs = strtotime($currentTime);
+            $endTs = strtotime($endTime);
+
+      
+            $closestTime = null;
+            $closestDiff = PHP_INT_MAX;
+
+            foreach ($time_amount as $time => $limit) {
+                $levelTs = strtotime($time);
+
+                // Only consider levels that have already passed
+                if ($levelTs <= $currentTs) {
+                    $diff = $currentTs - $levelTs;
+                    if ($diff < $closestDiff) {
+                        $closestDiff = $diff;
+                        $closestTime = $time;
+                    }
+                }
+            }
+
+
+            $allowedAmount = $time_amount[$closestTime];
+
+            // now compare user total
+            if ($limit_total > $allowedAmount && $currentTs < $endTs) {
+                return redirect()->back()->with('error', "Amount limit exceeded. Max allowed at {$closestTime} is {$allowedAmount}. You have already bet {$totalBetAmount}. Your attempted total is {$limit_total}.");
+
+            }
+
             if($total > $available_fund){
                 return redirect()->back()->with('error', 'Betting Amount Bigger Than Available Balance');
             }elseif($total == 0){

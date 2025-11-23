@@ -97,8 +97,8 @@
                     <input type="hidden" name="id" id="itemId" required>
                     <select class="form-select" name="status" aria-label="Default select example">
                         <option selected>Select Status</option>
-                        <option value="pending">Pending</option>
-                        <option value="success">Success</option>
+                        <option value="rejected">Rejected</option>
+                        <option value="approved">Approved</option>
                     </select>
                     {{-- Add more fields as needed --}}
 

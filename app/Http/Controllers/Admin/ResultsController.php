@@ -154,7 +154,13 @@ class ResultsController extends Controller
      */
     public function edit($id)
     {
-        //
+        $game = Game::find($id);
+        $result = Result::where("game_id", $id)->get();
+        $timeAmount = json_decode($game->time_amount, true);
+        if (!is_array($timeAmount)) {
+            $timeAmount = []; // fallback when json is empty or invalid
+        }
+        return view('admin.results.edit', compact('game', 'result', 'timeAmount'));
     }
 
     /**
@@ -184,6 +190,12 @@ class ResultsController extends Controller
         }else{
             return redirect()->back()->with('error', 'Result time of game is '.$result_time->format('h:i A'). ' please wait');
         } 
+    }
+
+
+    public function game_update(Request $request, $id)
+    {
+
     }
 
     /**

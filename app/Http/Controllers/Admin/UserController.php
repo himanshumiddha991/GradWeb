@@ -6,14 +6,24 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     public function index()
     {
-          $user = User::where('admin_id', Auth::guard('admin')->id())
-                ->latest()
-                ->paginate(5);
+        $admin = Admin::with('roles')->find(Auth::guard('admin')->id());
+       $isSuperAdmin = $admin->roles->contains('name', 'master_admin');
+
+        if ($isSuperAdmin) {
+            // super admin gets all users
+            $user = User::latest()->paginate(5);
+        } else {
+            // normal admin gets only their users
+            $user = User::where('admin_id', $admin->id)
+                        ->latest()
+                        ->paginate(5);
+        }
         return view('admin.users.index', compact('user'));
     }
 
@@ -27,9 +37,8 @@ class UserController extends Controller
         
          $request->validate([
         'name' => 'required',
-        'email' => 'required|email|unique:users,email',
+        'mobile' => 'required|numeric|digits:10|unique:users,mobile',
         'password' => 'required|min:6',
-        'mobile' => 'required|digits:10',
         ]);
 
         User::create([

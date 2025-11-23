@@ -20,8 +20,7 @@ class HomeController extends Controller
             $query->whereDate('date', $previous_date);
         }, 'current'=> function ($query) use ($current_date) {
             $query->whereDate('date', $current_date);
-        },])
-        ->has('previous') 
+        },]) 
         ->orderBy('result_timing', 'desc')
         ->get();
         return view('website.pages.home', compact('games','current_date' ));
